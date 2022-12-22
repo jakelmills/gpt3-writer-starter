@@ -1,6 +1,6 @@
 import React from "react"
 import commerce from "../lib/commerce"
-import ProductList from "./components/productlist"
+import ProductList from "../components/productlist"
 
 export async function getStaticProps() {
   const { data: products } = await commerce.products.list();
