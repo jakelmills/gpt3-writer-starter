@@ -1,4 +1,5 @@
 import commerce from "../../lib/commerce";
+import { useCartDispatch } from "../../context/cart";
 
 export async function getStaticProps({ params }) {
   const { permalink } = params;
@@ -28,14 +29,17 @@ export async function getStaticPaths() {
 }
 
 export default function ProductPage({ product }) {
-  console.log(product)
-  console.log(product.image.url)
+  const {setCart} = useCartDispatch()
+
+  const addToCart = () => 
+    commerce.cart.add(product.id).then(({cart}) => setCart(cart))
+
   return (
     <>
       <h1>{product.name}</h1>
       <p>{product.price.formatted_with_symbol}</p>
-      {/* <div style={backgroundImage:`url("${product.media.source}")`}></div> */}
-      <img src={`${product.image.url}`} style = {{height: "150px"}}></img>
+      <img src={`${product.image.url}`} style = {{height: "250px"}}></img>
+      <button onClick={addToCart}>Add to cart</button>
     </>
   );
 }
